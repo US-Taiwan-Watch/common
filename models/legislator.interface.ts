@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { ObjectType, Field, Int } from "type-graphql";
 
 export type LegislatorRoleParty =
@@ -88,7 +87,7 @@ export class Legislator {
   @Field({ nullable: false })
   bioGuideId!: string; // Primary key
 
-  //   // basic info
+  // basic info
   @Field({ nullable: true })
   firstName?: string;
   @Field({ nullable: false })

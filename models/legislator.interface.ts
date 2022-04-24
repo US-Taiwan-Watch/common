@@ -84,13 +84,13 @@ export class Legislator {
     this.bioGuideId = bioGuideId;
   }
 
-  @Field({ nullable: false })
+  @Field()
   bioGuideId!: string; // Primary key
 
   // basic info
   @Field({ nullable: true })
   firstName?: string;
-  @Field({ nullable: false })
+  @Field({ nullable: true })
   lastName?: string;
   middleName?: string;
   nameSuffix?: string;

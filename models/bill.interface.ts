@@ -30,17 +30,30 @@ export class TextDocument {
 // TODO: graphql fields
 @ObjectType()
 export class Bill {
+  constructor(congress: number, billType: BillType, billNumber: number) {
+    this.congress = congress;
+    this.billType = billType;
+    this.billNumber = billNumber;
+  }
+
   // Primary keys
+
+  @Field()
   congress!: number;
+  @Field()
   billType!: BillType;
+  @Field()
   billNumber!: number;
 
   title?: Ii18NText;
 
   // Taiwan Watch fields
   summary?: Ii18NText;
+
+  @Field({ nullable: true })
   relevance?: number;
 
+  @Field({ nullable: true })
   introducedDate?: number;
 
   trackers!: Array<BillTracker>;

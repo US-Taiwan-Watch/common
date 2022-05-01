@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from "type-graphql";
 
-export type LegislatorRoleParty =
+export type MemberRoleParty =
   'Democrat'
   | 'Republican'
   | 'Populist'
@@ -79,7 +79,7 @@ export type Territory = 'MP' | 'GU' | 'AS' | 'VI' | 'PI' | 'DK';
 export type Region = 'PI' | 'DK';
 
 @ObjectType()
-export class Legislator {
+export class Member {
   constructor(bioGuideId: string) {
     this.bioGuideId = bioGuideId;
   }
@@ -128,13 +128,13 @@ export class Legislator {
   profilePictureUri?: string; // should be a uri to our service
 
   // roles
-  @Field(() => [LegislatorRole])
-  congressRoles?: Array<LegislatorRole>;
+  @Field(() => [MemberRole])
+  congressRoles?: Array<MemberRole>;
 
 }
 
 @ObjectType()
-export class LegislatorRole {
+export class MemberRole {
   @Field(() => [Int])
   congressNumbers!: Array<number>;
   @Field()
@@ -144,7 +144,7 @@ export class LegislatorRole {
   @Field()
   endDate!: number;
   @Field()
-  party!: LegislatorRoleParty;
+  party!: MemberRoleParty;
   @Field()
   state!: State | Territory | Region;
   @Field(() => Int, { nullable: true })

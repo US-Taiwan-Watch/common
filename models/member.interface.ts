@@ -80,12 +80,12 @@ export type Region = 'PI' | 'DK';
 
 @ObjectType()
 export class Member {
-  constructor(bioGuideId: string) {
-    this.bioGuideId = bioGuideId;
+  constructor(id: string) {
+    this.id = id;
   }
 
   @Field()
-  bioGuideId!: string; // Primary key
+  id!: string; // bioGuideId
 
   // basic info
   @Field({ nullable: true })

@@ -19,12 +19,7 @@ export class BillAction {
 
 export class TextVersion {
   code!: TextVersionCode;
-  date?: number;
-  documents?: Array<TextDocument>;
-}
-
-export class TextDocument {
-  // TODO: used to be S3 document
+  date!: string;
 }
 
 // TODO: graphql fields
@@ -34,8 +29,10 @@ export class Bill {
     this.congress = congress;
     this.billType = billType;
     this.billNumber = billNumber;
+    this.id = `${congress}-${billType}-${billNumber}`;
   }
 
+  id!: string;
   // Primary keys
 
   @Field()
@@ -45,10 +42,8 @@ export class Bill {
   @Field()
   billNumber!: number;
 
-  title?: Ii18NText;
-
-  // Taiwan Watch fields
-  summary?: Ii18NText;
+  title?: string;
+  summary?: string;
 
   @Field({ nullable: true })
   relevance?: number;

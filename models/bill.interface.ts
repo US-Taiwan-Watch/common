@@ -8,7 +8,7 @@ export type TextVersionCode = 'unknown' | 'rcs' | 'res' | 'rdh' | 'ips' | 'eph' 
 
 export class BillTracker {
   stepName!: string;
-  isCurrent!: boolean;
+  selected!: boolean;
 }
 
 export class BillAction {
@@ -20,6 +20,11 @@ export class BillAction {
 export class TextVersion {
   code!: TextVersionCode;
   date!: string;
+}
+
+export class SponsorInfo {
+  sponsorDate!: string;
+  memberId!: string;
 }
 
 // TODO: graphql fields
@@ -60,7 +65,6 @@ export class Bill {
   actions!: Array<BillAction>;
   actionsAll!: Array<BillAction>;
 
-  // TODO:
-  // sponsor?
-  // cosponsors
+  sponsorInfo!: SponsorInfo;
+  cosponsorInfos!: SponsorInfo[];
 }

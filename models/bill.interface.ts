@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from "type-graphql";
-import { Ii18NText } from "./i18n.interface";
+import { I18NText } from "./i18n.interface";
 
 export type BillType = 'hr' | 's' | 'sconres' | 'hres' | 'sres' | 'sjres' | 'hconres' | 'hjres';
 export type BillTrackerStatus = 'intro' | 'house' | 'senate' | 'president' | 'law';
@@ -13,17 +13,19 @@ export class BillTracker {
 
 export class BillAction {
   description!: string;
-  datetime!: number;
+  date!: string;
   chamber?: ChamberType;
 }
 
 export class TextVersion {
   code!: TextVersionCode;
   date!: string;
+  name!: string;
+  id?: string;
 }
 
-export class SponsorInfo {
-  sponsorDate!: string;
+export class CosponsorInfo {
+  date!: string;
   memberId!: string;
 }
 
@@ -47,14 +49,11 @@ export class Bill {
   @Field()
   billNumber!: number;
 
-  title?: string;
-  summary?: string;
+  title?: I18NText;
+  summary?: I18NText;
 
   @Field({ nullable: true })
-  relevance?: number;
-
-  @Field({ nullable: true })
-  introducedDate?: number;
+  introducedDate?: string;
 
   trackers!: Array<BillTracker>;
 
@@ -65,6 +64,6 @@ export class Bill {
   actions!: Array<BillAction>;
   actionsAll!: Array<BillAction>;
 
-  sponsorInfo!: SponsorInfo;
-  cosponsorInfos!: SponsorInfo[];
+  sponsorId!: string;
+  cosponsorInfos!: CosponsorInfo[];
 }

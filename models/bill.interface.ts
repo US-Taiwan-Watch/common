@@ -32,11 +32,23 @@ export class CosponsorInfo {
 // TODO: graphql fields
 @ObjectType()
 export class Bill {
-  constructor(congress: number, billType: BillType, billNumber: number) {
-    this.congress = congress;
-    this.billType = billType;
-    this.billNumber = billNumber;
-    this.id = `${congress}-${billType}-${billNumber}`;
+  public static fromKeys(congress: number, billType: BillType, billNumber: number): Bill {
+    return {
+      congress: congress,
+      billType: billType,
+      billNumber: billNumber,
+      id: `${congress}-${billType}-${billNumber}`,
+    }
+  }
+
+  public static fromId(id: string): Bill {
+    const keys = id.split('-');
+    return {
+      congress: parseInt(keys[0]),
+      billType: keys[1] as BillType,
+      billNumber: parseInt(keys[2]),
+      id: id,
+    }
   }
 
   id!: string;
@@ -55,15 +67,15 @@ export class Bill {
   @Field({ nullable: true })
   introducedDate?: string;
 
-  trackers!: Array<BillTracker>;
+  trackers?: BillTracker[];
 
   // TODO: s3entity
 
   // full text
-  versions!: Array<TextVersion>;
-  actions!: Array<BillAction>;
-  actionsAll!: Array<BillAction>;
+  versions?: TextVersion[];
+  actions?: BillAction[];
+  actionsAll?: BillAction[];
 
-  sponsorId!: string;
-  cosponsorInfos!: CosponsorInfo[];
+  sponsorId?: string;
+  cosponsorInfos?: CosponsorInfo[];
 }

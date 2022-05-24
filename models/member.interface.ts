@@ -111,15 +111,11 @@ export class Member {
 
   // external & social IDs
   @Field({ nullable: true })
-  osId?: string;
+  cspanId?: string;     // C-SPAN congress TV channel ID
   @Field({ nullable: true })
-  pvsId?: string;
+  twitterId?: string;   // e.g., 'RepJohnCurtis'
   @Field({ nullable: true })
-  cspanId?: string;
-  @Field({ nullable: true })
-  twitterId?: string; // e.g., 'RepJohnCurtis'
-  @Field({ nullable: true })
-  facebookId?: string; // e.g., 'CongressmanRalphAbraham'
+  facebookId?: string;  // e.g., 'CongressmanRalphAbraham'
   @Field({ nullable: true })
   youtubeId?: string;
 

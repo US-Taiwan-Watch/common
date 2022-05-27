@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from "type-graphql";
+import { ContentType } from "../../src/data-sync/sources/request-helper";
 import { I18NText } from "./i18n.interface";
 
 export type BillType = 'hr' | 's' | 'sconres' | 'hres' | 'sres' | 'sjres' | 'hconres' | 'hjres';
@@ -21,6 +22,7 @@ export class TextVersion {
   code!: TextVersionCode;
   date!: string;
   name!: string;
+  downloaded?: ContentType[];
   id?: string;
 }
 

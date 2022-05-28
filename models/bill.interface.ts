@@ -40,6 +40,7 @@ export class Bill {
       billType: billType,
       billNumber: billNumber,
       id: `${congress}-${billType}-${billNumber}`,
+      needsSync: true,
     }
   }
 
@@ -50,6 +51,7 @@ export class Bill {
       billType: keys[1] as BillType,
       billNumber: parseInt(keys[2]),
       id: id,
+      needsSync: true,
     }
   }
 
@@ -80,4 +82,6 @@ export class Bill {
 
   sponsorId?: string;
   cosponsorInfos?: CosponsorInfo[];
+
+  needsSync = true;
 }

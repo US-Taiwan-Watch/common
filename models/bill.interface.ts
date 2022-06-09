@@ -22,7 +22,7 @@ export class TextVersion {
   code!: TextVersionCode;
   date!: string;
   name!: string;
-  downloaded?: ContentType[];
+  downloaded?: { [type: string]: boolean };
   id?: string;
 }
 
@@ -84,4 +84,5 @@ export class Bill {
   cosponsorInfos?: CosponsorInfo[];
 
   needsSync = true;
+  manualSync?: boolean;
 }

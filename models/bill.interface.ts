@@ -64,6 +64,7 @@ export class Bill {
   @Field()
   billNumber!: number;
 
+  @Field()
   title?: I18NText;
   summary?: I18NText;
 

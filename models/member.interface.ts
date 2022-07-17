@@ -78,6 +78,9 @@ export type Territory = 'MP' | 'GU' | 'AS' | 'VI' | 'PI' | 'DK';
 
 export type Region = 'PI' | 'DK';
 
+// Outter Member data => data from old database or editted by editors
+// Inner Member data (propublica / unitedstates) => data queried from other sources
+
 @ObjectType()
 export class Member {
   constructor(id: string) {
@@ -96,6 +99,10 @@ export class Member {
   nameSuffix?: string;
   @Field({ nullable: true })
   nickname?: string;
+  @Field({ nullable: true })
+  firstName_zh?: string;
+  @Field({ nullable: true })
+  lastName_zh?: string;
   @Field({ nullable: true })
   gender?: 'male' | 'female';
   @Field({ nullable: true })
@@ -127,6 +134,11 @@ export class Member {
   @Field(() => [MemberRole])
   congressRoles?: Array<MemberRole>;
 
+  propublicaMember?: Member;
+  unitedstatesMember?: Member;
+
+  // for filtering out the data user want to delete (but may exist in ext. sources)
+  revokedFields?: Array<typeof Member>
 }
 
 @ObjectType()
@@ -134,17 +146,21 @@ export class MemberRole {
   @Field(() => [Int])
   congressNumbers!: Array<number>;
   @Field()
-  chamber!: string;
+  chamber!: 's' | 'h';
   @Field()
-  startDate!: number;
+  startDate!: string;
   @Field()
-  endDate!: number;
+  endDate!: string;
   @Field()
   party!: MemberRoleParty;
   @Field()
   state!: State | Territory | Region;
+
+  // house only
   @Field(() => Int, { nullable: true })
   district?: number;
+
+  // senator only
   @Field(() => Int, { nullable: true })
   senatorClass?: number;
 }

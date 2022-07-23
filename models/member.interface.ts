@@ -93,9 +93,9 @@ export class Member {
   // basic info
   @Field({ nullable: true })
   firstName?: string;
+  middleName?: string;
   @Field({ nullable: true })
   lastName?: string;
-  middleName?: string;
   nameSuffix?: string;
   @Field({ nullable: true })
   nickname?: string;
@@ -138,7 +138,7 @@ export class Member {
   unitedstatesMember?: Member;
 
   // for filtering out the data user want to delete (but may exist in ext. sources)
-  revokedFields?: Array<typeof Member>
+  revokedFields?: Array<keyof Member>
 }
 
 @ObjectType()

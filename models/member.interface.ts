@@ -134,6 +134,10 @@ export class Member {
   @Field(() => [MemberRole])
   congressRoles?: Array<MemberRole>;
 
+  // used for Members queried from the sources
+  updateTimestamp?: number;
+  failCount?: number;
+
   propublicaMember?: Member;
   unitedstatesMember?: Member;
 

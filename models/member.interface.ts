@@ -138,6 +138,7 @@ export class Member {
   updateTimestamp?: number;
   failCount?: number;
 
+  bioguideMember?: Member;
   propublicaMember?: Member;
   unitedstatesMember?: Member;
 

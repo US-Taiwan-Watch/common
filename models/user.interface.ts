@@ -10,4 +10,13 @@ export class User {
 
   @Field(() => String, { nullable: true })
   email?: string;
+
+  @Field(() => String, { nullable: true })
+  name?: string;
+
+  @Field(() => String, { nullable: true })
+  nickname?: string;
+
+  @Field(() => String, { nullable: true })
+  picture?: string;
 }

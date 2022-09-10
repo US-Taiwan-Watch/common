@@ -130,6 +130,7 @@ export class Member {
   // pic
   @Field({ nullable: true })
   profilePictureUri?: string; // should be a uri to our service
+  getPictureFailCount?: number;
 
   // roles
   @Field(() => [MemberRole])

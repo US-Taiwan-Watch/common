@@ -1,7 +1,8 @@
 import { ObjectType, Field, Int } from "type-graphql";
 
 export type MemberRoleParty =
-  'Democrat'
+  'No Party Data'     // for error handling
+  | 'Democrat'
   | 'Republican'
   | 'Populist'
   | 'Unionist'
@@ -153,7 +154,7 @@ export class MemberRole {
   @Field()
   chamber!: 's' | 'h';
   @Field()
-  startDate!: string;
+  startDate!: string;     // 0000-00-00 for invalid data
   @Field()
   endDate!: string;
   @Field()

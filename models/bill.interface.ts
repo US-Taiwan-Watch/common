@@ -6,8 +6,11 @@ export type BillTrackerStatus = 'intro' | 'house' | 'senate' | 'president' | 'la
 export type ChamberType = 'senate' | 'house';
 export type TextVersionCode = 'unknown' | 'rcs' | 'res' | 'rdh' | 'ips' | 'eph' | 'enr' | 'rts' | 'cds' | 'sc' | 'ath' | 'renr' | 'reah' | 'rfs' | 'fph' | 'hds' | 'rds' | 'cdh' | 'pl' | 'cph' | 'as' | 'eh' | 'rs' | 'cps' | 'ris' | 'lth' | 'ash' | 'rih' | 'sas' | 'is' | 'hdh' | 'pp' | 'pav' | 'rch' | 'rfh' | 'eah' | 'lts' | 'pwh' | 'es' | 'fah' | 'ops' | 'rh' | 'pcs' | 'ats' | 'iph' | 'rah' | 'pap' | 'ras' | 'fps' | 'ih' | 'rth' | 'eas' | 'oph' | 'pch';
 
+@ObjectType()
 export class BillTracker {
+  @Field()
   stepName!: string;
+  @Field()
   selected!: boolean;
 }
 
@@ -71,6 +74,7 @@ export class Bill {
   @Field({ nullable: true })
   introducedDate?: string;
 
+  @Field(() => [BillTracker], { nullable: true })
   trackers?: BillTracker[];
 
   // TODO: s3entity

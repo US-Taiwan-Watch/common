@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from "type-graphql";
+import { Member } from ".";
 import { I18NText } from "./i18n.interface";
 
 export type BillType = 'hr' | 's' | 'sconres' | 'hres' | 'sres' | 'sjres' | 'hconres' | 'hjres';
@@ -36,25 +37,29 @@ export class CosponsorInfo {
 // TODO: graphql fields
 @ObjectType()
 export class Bill {
-  public static fromKeys(congress: number, billType: BillType, billNumber: number): Bill {
+  public static fromKeys(
+    congress: number,
+    billType: BillType,
+    billNumber: number
+  ): Bill {
     return {
       congress: congress,
       billType: billType,
       billNumber: billNumber,
       id: `${congress}-${billType}-${billNumber}`,
       needsSync: true,
-    }
+    };
   }
 
   public static fromId(id: string): Bill {
-    const keys = id.split('-');
+    const keys = id.split("-");
     return {
       congress: parseInt(keys[0]),
       billType: keys[1] as BillType,
       billNumber: parseInt(keys[2]),
       id: id,
       needsSync: true,
-    }
+    };
   }
 
   id!: string;
@@ -89,4 +94,19 @@ export class Bill {
 
   needsSync = true;
   manualSync?: boolean;
+
+  /**
+   * Derived fields from other collections
+   */
+
+  @Field(() => Member, { nullable: true })
+  sponsor?: Member;
+
+  @Field(() => Int, { nullable: true })
+  cosponsorsCount?: number;
+
+  @Field(() => [Member], { nullable: true })
+  cosponsors?: Member[];
+
+  tags?: string[];
 }

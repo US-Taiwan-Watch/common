@@ -1,13 +1,17 @@
-import { ObjectType, Field } from "type-graphql";
-import { v4 as uuidv4 } from 'uuid';
+import { ObjectType, Field, registerEnumType } from "type-graphql";
+import { v4 as uuidv4 } from "uuid";
 import { User } from ".";
 
 export type ArticleStatus = "Draft" | "Publish";
 
-// export enum ArticleType {
-//   POST = 1,
-//   POSTER = 2,
-// }
+export enum ArticleType {
+  POST = 1,
+  POSTER = 2,
+}
+
+registerEnumType(ArticleType, {
+  name: "ArticleType",
+});
 
 /**
  * Article
@@ -22,8 +26,8 @@ export class Article {
     isPublished?: boolean,
     authors?: string[],
     imageSource?: string,
-    tags?: string[]
-    // type: ArticleType = ArticleType.POST
+    tags?: string[],
+    type: ArticleType = ArticleType.POST,
   ) {
     this.id = uuidv4();
     // this.type = type;
@@ -35,6 +39,7 @@ export class Article {
     this.authors = authors;
     this.imageSource = imageSource;
     this.tags = tags;
+    this.type = type;
   }
 
   @Field(() => String, { nullable: false })
@@ -73,8 +78,8 @@ export class Article {
   @Field(() => [String], { nullable: true })
   tags?: string[];
 
-  // @Field(() => [String], { nullable: true })
-  // type: ArticleType;
+  @Field(() => ArticleType, { nullable: true })
+  type?: ArticleType;
 
   /**
    * Derived fields from other collections
@@ -83,4 +88,3 @@ export class Article {
   @Field(() => [User], { nullable: true })
   authorInfos?: User[];
 }
-

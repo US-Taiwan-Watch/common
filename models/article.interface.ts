@@ -5,7 +5,7 @@ import { User } from ".";
 export type ArticleStatus = "Draft" | "Publish";
 
 export enum ArticleType {
-  POST = 1,
+  ARTICLE = 1,
   POSTER = 2,
 }
 
@@ -27,7 +27,7 @@ export class Article {
     authors?: string[],
     imageSource?: string,
     tags?: string[],
-    type: ArticleType = ArticleType.POST,
+    type: ArticleType = ArticleType.ARTICLE,
   ) {
     this.id = uuidv4();
     // this.type = type;

@@ -68,7 +68,7 @@ export class Article {
   authors?: string[];
 
   @Field(() => Number, { nullable: true })
-  pusblishTime?: number;
+  publishedTime?: number;
 
   @Field(() => Number, { nullable: true })
   createdTime?: number;

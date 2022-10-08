@@ -85,6 +85,8 @@ export class Article {
   @Field(() => ArticleType, { nullable: true })
   type?: ArticleType;
 
+  deleted = false;
+
   /**
    * Derived fields from other collections
    */

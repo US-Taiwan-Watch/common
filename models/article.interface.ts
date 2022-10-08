@@ -13,6 +13,12 @@ registerEnumType(ArticleType, {
   name: "ArticleType",
 });
 
+
+export const ARTICLE_AUTHORIZED_ROLES = [
+  Auth0RoleName.Admin,
+  Auth0RoleName.Editor,
+];
+
 /**
  * Article
  */
@@ -59,8 +65,6 @@ export class Article {
   @Field(() => Boolean, { nullable: true })
   isPublished?: boolean;
 
-  @Authorized<Auth0RoleName>([Auth0RoleName.Admin, Auth0RoleName.Editor])
-  @Field(() => [String], { nullable: true })
   authors?: string[];
 
   @Field(() => Number, { nullable: true })

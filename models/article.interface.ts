@@ -1,6 +1,6 @@
-import { ObjectType, Field, registerEnumType } from "type-graphql";
+import { ObjectType, Field, registerEnumType, Authorized } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
-import { User } from ".";
+import { Auth0RoleName, User } from ".";
 
 export type ArticleStatus = "Draft" | "Publish";
 
@@ -30,7 +30,6 @@ export class Article {
     type: ArticleType = ArticleType.ARTICLE,
   ) {
     this.id = uuidv4();
-    // this.type = type;
     this.title = title;
     this.content = content;
     this.slug = slug;
@@ -60,6 +59,7 @@ export class Article {
   @Field(() => Boolean, { nullable: true })
   isPublished?: boolean;
 
+  @Authorized<Auth0RoleName>([Auth0RoleName.Admin, Auth0RoleName.Editor])
   @Field(() => [String], { nullable: true })
   authors?: string[];
 

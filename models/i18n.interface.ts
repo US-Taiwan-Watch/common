@@ -17,7 +17,7 @@ export class I18NText implements Ii18NText {
   en?: string;
 
   // computed field
-  @Field((type) => String, { nullable: true })
+  @Field(type => String, { nullable: true })
   text(@Info() info: { variableValues?: any }): string {
     const lang: string = info.variableValues?.lang;
     let s = this.zh || this.en || "";
@@ -40,5 +40,10 @@ export class I18NText implements Ii18NText {
     zh && (text.en = en);
     zh && (text.zh = zh);
     return text;
+  }
+
+  public constructor(txt?: Ii18NText) {
+    this.zh = txt?.zh;
+    this.en = txt?.en;
   }
 }

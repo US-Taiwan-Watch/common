@@ -1,6 +1,6 @@
 import { ObjectType, Field, registerEnumType, Authorized } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
-import { Auth0RoleName, User } from ".";
+import { Auth0RoleName, I18NText, Ii18NText, User } from ".";
 
 export type ArticleStatus = "Draft" | "Publish";
 
@@ -13,7 +13,6 @@ registerEnumType(ArticleType, {
   name: "ArticleType",
 });
 
-
 export const ARTICLE_AUTHORIZED_ROLES = [
   Auth0RoleName.Admin,
   Auth0RoleName.Editor,
@@ -25,7 +24,7 @@ export const ARTICLE_AUTHORIZED_ROLES = [
 @ObjectType()
 export class Article {
   constructor(
-    title?: string,
+    title?: I18NText,
     content?: string,
     slug?: string,
     preview?: string,
@@ -50,8 +49,8 @@ export class Article {
   @Field(() => String, { nullable: false })
   id!: string;
 
-  @Field(() => String, { nullable: true })
-  title?: string;
+  @Field(() => I18NText, { nullable: true })
+  title?: I18NText;
 
   @Field(() => String, { nullable: true })
   content?: string;

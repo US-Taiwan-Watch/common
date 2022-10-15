@@ -27,7 +27,7 @@ export class Article {
     title?: I18NText,
     content?: string,
     slug?: string,
-    preview?: string,
+    preview?: I18NText,
     isPublished?: boolean,
     authors?: string[],
     imageSource?: string,
@@ -58,8 +58,8 @@ export class Article {
   @Field(() => String, { nullable: true })
   slug?: string;
 
-  @Field(() => String, { nullable: true })
-  preview?: string;
+  @Field(() => I18NText, { nullable: true })
+  preview?: I18NText;
 
   @Field(() => Boolean, { nullable: true })
   isPublished?: boolean;

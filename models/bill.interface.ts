@@ -54,6 +54,13 @@ export class Bill {
     }
   }
 
+  public static editOptionalKeys(summary: I18NText,introducedDate?: string): Bill {
+    return {
+      summary,
+      introducedDate,
+    }
+  }
+
   id!: string;
   // Primary keys
 
@@ -64,7 +71,7 @@ export class Bill {
   @Field()
   billNumber!: number;
 
-  @Field()
+  @Field({ nullable: true })
   title?: I18NText;
   summary?: I18NText;
 

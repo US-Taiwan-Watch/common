@@ -1,7 +1,16 @@
-import { ObjectType, Field, Info } from "type-graphql";
+import { ObjectType, Field, Info, InputType } from "type-graphql";
 
 export interface Ii18NText {
   zh?: string;
+  en?: string;
+}
+
+@InputType()
+export class I18NTextInput implements Ii18NText {
+  @Field(() => String, { nullable: true })
+  zh?: string;
+
+  @Field(() => String, { nullable: true })
   en?: string;
 }
 
@@ -17,7 +26,7 @@ export class I18NText implements Ii18NText {
   en?: string;
 
   // computed field
-  @Field((type) => String, { nullable: true })
+  @Field(type => String, { nullable: true })
   text(@Info() info: { variableValues?: any }): string {
     const lang: string = info.variableValues?.lang;
     let s = this.zh || this.en || "";
@@ -36,9 +45,11 @@ export class I18NText implements Ii18NText {
   }
 
   public static create(en?: string, zh?: string): I18NText {
-    const text = new I18NText();
-    zh && (text.en = en);
-    zh && (text.zh = zh);
-    return text;
+    return new I18NText({ zh, en });
+  }
+
+  public constructor(txt?: Ii18NText) {
+    this.zh = txt?.zh;
+    this.en = txt?.en;
   }
 }

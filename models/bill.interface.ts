@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from "type-graphql";
+import { Member } from ".";
 import { I18NText } from "./i18n.interface";
 
 export type BillType = 'hr' | 's' | 'sconres' | 'hres' | 'sres' | 'sjres' | 'hconres' | 'hjres';
@@ -6,8 +7,11 @@ export type BillTrackerStatus = 'intro' | 'house' | 'senate' | 'president' | 'la
 export type ChamberType = 'senate' | 'house';
 export type TextVersionCode = 'unknown' | 'rcs' | 'res' | 'rdh' | 'ips' | 'eph' | 'enr' | 'rts' | 'cds' | 'sc' | 'ath' | 'renr' | 'reah' | 'rfs' | 'fph' | 'hds' | 'rds' | 'cdh' | 'pl' | 'cph' | 'as' | 'eh' | 'rs' | 'cps' | 'ris' | 'lth' | 'ash' | 'rih' | 'sas' | 'is' | 'hdh' | 'pp' | 'pav' | 'rch' | 'rfh' | 'eah' | 'lts' | 'pwh' | 'es' | 'fah' | 'ops' | 'rh' | 'pcs' | 'ats' | 'iph' | 'rah' | 'pap' | 'ras' | 'fps' | 'ih' | 'rth' | 'eas' | 'oph' | 'pch';
 
+@ObjectType()
 export class BillTracker {
+  @Field()
   stepName!: string;
+  @Field()
   selected!: boolean;
 }
 
@@ -33,25 +37,29 @@ export class CosponsorInfo {
 // TODO: graphql fields
 @ObjectType()
 export class Bill {
-  public static fromKeys(congress: number, billType: BillType, billNumber: number): Bill {
+  public static fromKeys(
+    congress: number,
+    billType: BillType,
+    billNumber: number
+  ): Bill {
     return {
       congress: congress,
       billType: billType,
       billNumber: billNumber,
       id: `${congress}-${billType}-${billNumber}`,
       needsSync: true,
-    }
+    };
   }
 
   public static fromId(id: string): Bill {
-    const keys = id.split('-');
+    const keys = id.split("-");
     return {
       congress: parseInt(keys[0]),
       billType: keys[1] as BillType,
       billNumber: parseInt(keys[2]),
       id: id,
       needsSync: true,
-    }
+    };
   }
 
   public static editOptionalKeys(summary: I18NText,introducedDate?: string): Bill {
@@ -78,6 +86,7 @@ export class Bill {
   @Field({ nullable: true })
   introducedDate?: string;
 
+  @Field(() => [BillTracker], { nullable: true })
   trackers?: BillTracker[];
 
   // TODO: s3entity
@@ -92,4 +101,19 @@ export class Bill {
 
   needsSync = true;
   manualSync?: boolean;
+
+  /**
+   * Derived fields from other collections
+   */
+
+  @Field(() => Member, { nullable: true })
+  sponsor?: Member;
+
+  @Field(() => Int, { nullable: true })
+  cosponsorsCount?: number;
+
+  @Field(() => [Member], { nullable: true })
+  cosponsors?: Member[];
+
+  tags?: string[];
 }

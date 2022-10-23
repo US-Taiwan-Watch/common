@@ -2,10 +2,77 @@ import { ObjectType, Field, Int } from "type-graphql";
 import { Member } from ".";
 import { I18NText } from "./i18n.interface";
 
-export type BillType = 'hr' | 's' | 'sconres' | 'hres' | 'sres' | 'sjres' | 'hconres' | 'hjres';
-export type BillTrackerStatus = 'intro' | 'house' | 'senate' | 'president' | 'law';
-export type ChamberType = 'senate' | 'house';
-export type TextVersionCode = 'unknown' | 'rcs' | 'res' | 'rdh' | 'ips' | 'eph' | 'enr' | 'rts' | 'cds' | 'sc' | 'ath' | 'renr' | 'reah' | 'rfs' | 'fph' | 'hds' | 'rds' | 'cdh' | 'pl' | 'cph' | 'as' | 'eh' | 'rs' | 'cps' | 'ris' | 'lth' | 'ash' | 'rih' | 'sas' | 'is' | 'hdh' | 'pp' | 'pav' | 'rch' | 'rfh' | 'eah' | 'lts' | 'pwh' | 'es' | 'fah' | 'ops' | 'rh' | 'pcs' | 'ats' | 'iph' | 'rah' | 'pap' | 'ras' | 'fps' | 'ih' | 'rth' | 'eas' | 'oph' | 'pch';
+export type BillType =
+  | "hr"
+  | "s"
+  | "sconres"
+  | "hres"
+  | "sres"
+  | "sjres"
+  | "hconres"
+  | "hjres";
+export type BillTrackerStatus =
+  | "intro"
+  | "house"
+  | "senate"
+  | "president"
+  | "law";
+export type ChamberType = "senate" | "house";
+export type TextVersionCode =
+  | "unknown"
+  | "rcs"
+  | "res"
+  | "rdh"
+  | "ips"
+  | "eph"
+  | "enr"
+  | "rts"
+  | "cds"
+  | "sc"
+  | "ath"
+  | "renr"
+  | "reah"
+  | "rfs"
+  | "fph"
+  | "hds"
+  | "rds"
+  | "cdh"
+  | "pl"
+  | "cph"
+  | "as"
+  | "eh"
+  | "rs"
+  | "cps"
+  | "ris"
+  | "lth"
+  | "ash"
+  | "rih"
+  | "sas"
+  | "is"
+  | "hdh"
+  | "pp"
+  | "pav"
+  | "rch"
+  | "rfh"
+  | "eah"
+  | "lts"
+  | "pwh"
+  | "es"
+  | "fah"
+  | "ops"
+  | "rh"
+  | "pcs"
+  | "ats"
+  | "iph"
+  | "rah"
+  | "pap"
+  | "ras"
+  | "fps"
+  | "ih"
+  | "rth"
+  | "eas"
+  | "oph"
+  | "pch";
 
 @ObjectType()
 export class BillTracker {
@@ -40,7 +107,7 @@ export class Bill {
   public static fromKeys(
     congress: number,
     billType: BillType,
-    billNumber: number
+    billNumber: number,
   ): Bill {
     return {
       congress: congress,
@@ -62,13 +129,7 @@ export class Bill {
     };
   }
 
-  public static editOptionalKeys(summary: I18NText,introducedDate?: string): Bill {
-    return {
-      summary,
-      introducedDate,
-    }
-  }
-
+  @Field()
   id!: string;
   // Primary keys
 

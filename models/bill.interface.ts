@@ -1,6 +1,6 @@
-import { ObjectType, Field, Int } from "type-graphql";
-import { Member } from ".";
-import { I18NText } from "./i18n.interface";
+import { ObjectType, Field, Int, InputType } from "type-graphql";
+import { Auth0RoleName, Member } from ".";
+import { I18NText, I18NTextInput } from "./i18n.interface";
 
 export type BillType =
   | "hr"
@@ -101,6 +101,25 @@ export class CosponsorInfo {
   memberId!: string;
 }
 
+export const BILL_AUTHORIZED_ROLES = [
+  Auth0RoleName.Admin,
+  Auth0RoleName.Editor,
+];
+@InputType()
+export class BillInput {
+  @Field()
+  congress!: number;
+  @Field()
+  billType!: BillType;
+  @Field()
+  billNumber!: number;
+
+  @Field({ nullable: true })
+  title?: I18NTextInput;
+  @Field({ nullable: true })
+  summary?: I18NTextInput;
+}
+
 // TODO: graphql fields
 @ObjectType()
 export class Bill {
@@ -142,6 +161,7 @@ export class Bill {
 
   @Field({ nullable: true })
   title?: I18NText;
+  @Field({ nullable: true })
   summary?: I18NText;
 
   @Field({ nullable: true })

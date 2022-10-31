@@ -183,6 +183,9 @@ export class Bill {
   needsSync = true;
   manualSync?: boolean;
 
+  fieldsLastSynced?: { [key: string]: number };
+  lastSynced?: number;
+
   /**
    * Derived fields from other collections
    */
@@ -197,4 +200,7 @@ export class Bill {
   cosponsors?: Member[];
 
   tags?: string[];
+
+  @Field()
+  isSyncing?: boolean;
 }

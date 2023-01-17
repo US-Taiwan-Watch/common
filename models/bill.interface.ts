@@ -118,34 +118,38 @@ export class BillInput {
   title?: I18NTextInput;
   @Field({ nullable: true })
   summary?: I18NTextInput;
+
+  @Field(() => Int, { nullable: true })
+  introducedDate?: number;
+}
+
+@InputType()
+export class BillQueryInput {
+  @Field(() => [String])
+  keywords!: string[];
 }
 
 // TODO: graphql fields
 @ObjectType()
 export class Bill {
+  constructor(id: string) {
+    this.id = id;
+    const keys = id.split("-");
+    this.congress = parseInt(keys[0]);
+    this.billType = keys[1] as BillType;
+    this.billNumber = parseInt(keys[2]);
+  }
+
   public static fromKeys(
     congress: number,
     billType: BillType,
     billNumber: number,
   ): Bill {
-    return {
-      congress: congress,
-      billType: billType,
-      billNumber: billNumber,
-      id: `${congress}-${billType}-${billNumber}`,
-      needsSync: true,
-    };
+    return new this(`${congress}-${billType}-${billNumber}`);
   }
 
   public static fromId(id: string): Bill {
-    const keys = id.split("-");
-    return {
-      congress: parseInt(keys[0]),
-      billType: keys[1] as BillType,
-      billNumber: parseInt(keys[2]),
-      id: id,
-      needsSync: true,
-    };
+    return new this(id);
   }
 
   @Field()
@@ -203,4 +207,9 @@ export class Bill {
 
   @Field()
   isSyncing?: boolean;
+
+  @Field(() => Int, { nullable: true })
+  createdTime?: number;
+
+  deleted = false;
 }

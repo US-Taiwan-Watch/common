@@ -1,5 +1,7 @@
 import { ObjectType, Field, Int } from "type-graphql";
 
+export type GenderType = 'male' | 'female';
+
 export type MemberRoleParty =
   'No Party Data'     // for error handling
   | 'Democrat'
@@ -90,6 +92,7 @@ export class Member {
 
   @Field()
   id!: string; // bioGuideId
+  id_alias?: string;  // alias ID for the case that a member's ID is changed [Manually update]
 
   // basic info
   @Field({ nullable: true })
@@ -105,7 +108,7 @@ export class Member {
   @Field({ nullable: true })
   lastName_zh?: string;
   @Field({ nullable: true })
-  gender?: 'male' | 'female';
+  gender?: GenderType;
   @Field({ nullable: true })
   birthday?: string; // e.g., '1960-05-10'
 
@@ -158,8 +161,9 @@ export class MemberRole {
   startDate!: string;     // 0000-00-00 for invalid data
   @Field()
   endDate!: string;
-  @Field()
-  party!: MemberRoleParty;
+  party?: MemberRoleParty;  // phased out
+  @Field(() => [PartyRecord])
+  parties!: Array<PartyRecord>;
   @Field()
   state!: State | Territory | Region;
 
@@ -170,4 +174,14 @@ export class MemberRole {
   // senator only
   @Field(() => Int, { nullable: true })
   senatorClass?: number;
+}
+
+@ObjectType()
+export class PartyRecord {
+  @Field()
+  party!: MemberRoleParty;
+  @Field()
+  startDate!: string;
+  @Field()
+  endDate!: string;
 }

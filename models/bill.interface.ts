@@ -133,6 +133,9 @@ export class BillQueryInput {
 @ObjectType()
 export class Bill {
   constructor(id: string) {
+    if (!id) {
+      return;
+    }
     this.id = id;
     const keys = id.split("-");
     this.congress = parseInt(keys[0]);

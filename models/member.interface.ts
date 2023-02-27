@@ -158,9 +158,9 @@ export class MemberRole {
   @Field()
   chamber!: 's' | 'h';
   @Field()
-  startDate!: string;     // 0000-00-00 for invalid data
+  startDate!: string;     // YYYY-MM-DD (filling 0's for invalid data)
   @Field()
-  endDate!: string;
+  endDate!: string;       // YYYY-MM-DD (filling 9's for invalid data)
   party?: MemberRoleParty;  // phased out
   @Field(() => [PartyRecord])
   parties!: Array<PartyRecord>;

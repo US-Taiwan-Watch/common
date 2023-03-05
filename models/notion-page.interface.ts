@@ -1,3 +1,3 @@
-export class NotionPage {
+export abstract class NotionPage {
   notionPageId?: string;
 }

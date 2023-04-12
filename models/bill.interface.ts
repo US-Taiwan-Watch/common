@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int, InputType } from "type-graphql";
 import { Auth0RoleName, Member } from ".";
 import { I18NText, I18NTextInput } from "./i18n.interface";
+import { NotionPage } from "./notion-page.interface";
 
 export type BillType =
   | "hr"
@@ -129,10 +130,20 @@ export class BillQueryInput {
   keywords!: string[];
 }
 
+export enum BillSyncStatus {
+  WRONG_FORMAT = "Wrong format",
+  FAILED = "Failed",
+  NOT_STARTED = "Not started",
+  WILL_SYNC = "Will sync",
+  MANUAL_SYNC = "Manual sync",
+  DONE = "Done",
+}
+
 // TODO: graphql fields
 @ObjectType()
-export class Bill {
+export class Bill extends NotionPage {
   constructor(id: string) {
+    super();
     if (!id) {
       return;
     }
@@ -187,11 +198,11 @@ export class Bill {
   sponsorId?: string;
   cosponsorInfos?: CosponsorInfo[];
 
-  needsSync = true;
-  manualSync?: boolean;
-
   fieldsLastSynced?: { [key: string]: number };
   lastSynced?: number;
+
+  deleted = false;
+  status = BillSyncStatus.NOT_STARTED;
 
   /**
    * Derived fields from other collections
@@ -213,6 +224,4 @@ export class Bill {
 
   @Field(() => Int, { nullable: true })
   createdTime?: number;
-
-  deleted = false;
 }

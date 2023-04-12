@@ -1,6 +1,6 @@
 import { ObjectType, Field, registerEnumType, Authorized } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
-import { Auth0RoleName, I18NText, Ii18NText, User } from ".";
+import { Auth0RoleName, I18NText, Ii18NText, NotionPage, User } from ".";
 
 export type ArticleStatus = "Draft" | "Publish";
 
@@ -22,7 +22,7 @@ export const ARTICLE_AUTHORIZED_ROLES = [
  * Article
  */
 @ObjectType()
-export class Article {
+export class Article extends NotionPage {
   constructor(
     title?: I18NText,
     content?: string,
@@ -34,6 +34,7 @@ export class Article {
     tags?: string[],
     type: ArticleType = ArticleType.ARTICLE,
   ) {
+    super();
     this.id = uuidv4();
     this.title = title;
     this.content = content;

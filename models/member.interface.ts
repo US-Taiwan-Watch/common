@@ -83,19 +83,10 @@ export class Member {
   revokedFields?: Array<keyof Member>;
 }
 
-@ObjectType()
-export class MemberRole {
-  @Field(() => [Int])
-  congressNumbers!: Array<number>;
+@ObjectType({ isAbstract: true })
+export class MemberRoleBase {
   @Field()
   chamber!: "s" | "h";
-  @Field()
-  startDate!: string; // YYYY-MM-DD (filling 0's for invalid data)
-  @Field()
-  endDate!: string; // YYYY-MM-DD (filling 9's for invalid data)
-  party?: MemberRoleParty; // phased out
-  @Field(() => [PartyRecord])
-  parties!: Array<PartyRecord>;
   @Field()
   state!: State | Territory | Region;
 
@@ -106,6 +97,27 @@ export class MemberRole {
   // senator only
   @Field(() => Int, { nullable: true })
   senatorClass?: number;
+}
+
+@ObjectType()
+export class MemberRole extends MemberRoleBase {
+  @Field(() => [Int])
+  congressNumbers!: Array<number>;
+  party?: MemberRoleParty; // phased out
+  @Field(() => [PartyRecord])
+  parties!: Array<PartyRecord>;
+  @Field()
+  startDate!: string; // YYYY-MM-DD (filling 0's for invalid data)
+  @Field()
+  endDate!: string; // YYYY-MM-DD (filling 9's for invalid data)
+}
+
+@ObjectType()
+export class MemberRoleSnapshot extends MemberRoleBase {
+  @Field(() => Int)
+  congressNumber!: number;
+  @Field({ nullable: true })
+  party!: MemberRoleParty;
 }
 
 @ObjectType()

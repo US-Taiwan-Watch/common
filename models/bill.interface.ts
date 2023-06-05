@@ -208,19 +208,7 @@ export class Bill extends NotionPage {
    * Derived fields from other collections
    */
 
-  @Field(() => Member, { nullable: true })
-  sponsor?: Member;
-
-  @Field(() => Int, { nullable: true })
-  cosponsorsCount?: number;
-
-  @Field(() => [Member], { nullable: true })
-  cosponsors?: Member[];
-
   tags?: string[];
-
-  @Field()
-  isSyncing?: boolean;
 
   @Field(() => Int, { nullable: true })
   createdTime?: number;

@@ -25,6 +25,8 @@ export class I18NText implements Ii18NText {
   @Field(() => String, { nullable: true })
   en?: string;
 
+  text?: string;
+
   public constructor(txt?: Ii18NText) {
     this.zh = txt?.zh;
     this.en = txt?.en;

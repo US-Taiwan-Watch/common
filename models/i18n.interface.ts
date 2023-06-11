@@ -1,4 +1,5 @@
-import { ObjectType, Field, Info, InputType } from "type-graphql";
+import { ObjectType, Field, Info, InputType, Ctx } from "type-graphql";
+import { IApolloContext } from "../../src/@types/common.interface";
 
 export interface Ii18NText {
   zh?: string;
@@ -27,8 +28,11 @@ export class I18NText implements Ii18NText {
 
   // computed field
   @Field(type => String, { nullable: true })
-  text(@Info() info: { variableValues?: any }): string {
-    const lang: string = info.variableValues?.lang;
+  text(
+    @Info() info: { variableValues?: any },
+    @Ctx() ctx: IApolloContext,
+  ): string {
+    const lang: string = info.variableValues?.lang || ctx.language;
     let s = this.zh || this.en || "";
     if (lang) {
       switch (lang.toLowerCase().substring(0, 2)) {

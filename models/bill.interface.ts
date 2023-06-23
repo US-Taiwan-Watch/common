@@ -89,12 +89,32 @@ export class BillAction {
   chamber?: ChamberType;
 }
 
+@ObjectType({ isAbstract: true })
 export class TextVersion {
+  @Field()
   code!: TextVersionCode;
+  @Field()
   date!: string;
+  @Field()
   name!: string;
   downloaded?: { [type: string]: boolean };
   id?: string;
+}
+
+@ObjectType()
+class TextVersionFiles {
+  @Field({ nullable: true })
+  pdf?: string;
+  @Field({ nullable: true })
+  xml?: string;
+  @Field({ nullable: true })
+  txt?: string;
+}
+
+@ObjectType()
+export class TextVersionWithFiles extends TextVersion {
+  @Field(() => TextVersionFiles, { nullable: true })
+  files!: TextVersionFiles;
 }
 
 export class CosponsorInfo {

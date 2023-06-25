@@ -164,9 +164,6 @@ export enum BillSyncStatus {
 export class Bill extends NotionPage {
   constructor(id: string) {
     super();
-    if (!id) {
-      return;
-    }
     this.id = id;
     const keys = id.split("-");
     this.congress = parseInt(keys[0]);
@@ -182,8 +179,15 @@ export class Bill extends NotionPage {
     return new this(`${congress}-${billType}-${billNumber}`);
   }
 
-  public static fromId(id: string): Bill {
-    return new this(id);
+  public static fromId(id: string) {
+    if (!id) {
+      return null;
+    }
+    const bill = new this(id);
+    if (bill.congress && bill.billType && bill.billNumber) {
+      return bill;
+    }
+    return null;
   }
 
   @Field()

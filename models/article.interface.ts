@@ -1,6 +1,6 @@
-import { ObjectType, Field, registerEnumType, Authorized } from "type-graphql";
+import { ObjectType, Field, registerEnumType, ArgsType } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
-import { Auth0RoleName, I18NText, Ii18NText, NotionPage, User } from ".";
+import { Auth0RoleName, I18NText, NotionPage, User } from ".";
 
 export type ArticleStatus = "Draft" | "Publish";
 
@@ -12,6 +12,12 @@ export enum ArticleType {
 registerEnumType(ArticleType, {
   name: "ArticleType",
 });
+
+@ArgsType()
+export class ArticleTypeArgs {
+  @Field(type => ArticleType)
+  type!: ArticleType;
+}
 
 export const ARTICLE_AUTHORIZED_ROLES = [
   Auth0RoleName.Admin,

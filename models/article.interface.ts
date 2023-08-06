@@ -91,6 +91,8 @@ export class Article extends NotionPage {
   @Field(() => ArticleType, { nullable: true })
   type?: ArticleType;
 
+  relatedArticleIds: string[] = [];
+
   deleted = false;
 
   /**

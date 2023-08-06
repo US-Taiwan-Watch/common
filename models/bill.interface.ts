@@ -162,28 +162,23 @@ export enum BillSyncStatus {
 // TODO: graphql fields
 @ObjectType()
 export class Bill extends NotionPage {
-  constructor(id: string) {
-    super();
-    this.id = id;
-    const keys = id.split("-");
-    this.congress = parseInt(keys[0]);
-    this.billType = keys[1] as BillType;
-    this.billNumber = parseInt(keys[2]);
-  }
-
   public static fromKeys(
     congress: number,
     billType: BillType,
     billNumber: number,
-  ): Bill {
-    return new this(`${congress}-${billType}-${billNumber}`);
+  ): Bill | null {
+    return this.fromId(`${congress}-${billType}-${billNumber}`);
   }
 
-  public static fromId(id: string) {
+  public static fromId(id: string): Bill | null {
     if (!id) {
       return null;
     }
-    const bill = new this(id);
+    const keys = id.split("-");
+    const bill = new this();
+    bill.congress = parseInt(keys[0]);
+    bill.billType = keys[1] as BillType;
+    bill.billNumber = parseInt(keys[2]);
     if (bill.congress && bill.billType && bill.billNumber) {
       return bill;
     }

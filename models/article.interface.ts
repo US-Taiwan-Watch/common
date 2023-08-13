@@ -95,6 +95,8 @@ export class Article extends NotionPage {
 
   deleted = false;
 
+  [key: string]: any; // Index signature to allow dynamic property access
+
   /**
    * Derived fields from other collections
    */

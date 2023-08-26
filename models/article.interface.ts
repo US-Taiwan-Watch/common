@@ -63,6 +63,9 @@ export class Article extends NotionPage {
   content?: string;
 
   @Field(() => String, { nullable: true })
+  text?: string;
+
+  @Field(() => String, { nullable: true })
   slug?: string;
 
   @Field(() => I18NText, { nullable: true })

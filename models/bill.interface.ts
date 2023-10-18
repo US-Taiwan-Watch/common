@@ -176,6 +176,7 @@ export class Bill extends NotionPage {
     }
     const keys = id.split("-");
     const bill = new this();
+    bill.id = id;
     bill.congress = parseInt(keys[0]);
     bill.billType = keys[1] as BillType;
     bill.billNumber = parseInt(keys[2]);
